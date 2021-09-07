@@ -1,9 +1,0 @@
-server:
-  port: 9590
-
-spring:
-  application:
-    name: microservices-customer
-  data:
-    mongodb:
-      database: microservicescustomer
