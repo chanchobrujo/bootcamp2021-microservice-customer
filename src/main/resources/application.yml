@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: microservices-customer
+  data:
+    mongodb:
+      auto-index-creation: true
+      database: microservicescustomer
+
+server:
+  port: 9590

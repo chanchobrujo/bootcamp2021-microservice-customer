@@ -34,4 +34,7 @@ public class CustomerFrom {
     @Email
     @NotBlank(message = "El campo dirección de correo electrónico no debe estar vacio.")
     private String emailaddress;
+
+    @NotBlank(message = "El campo tipo de cliente no debe estar vacio.")
+    private String typecustomer;
 }

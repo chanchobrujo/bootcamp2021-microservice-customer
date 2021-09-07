@@ -27,24 +27,26 @@ public class Customer {
     private String lastnamecustomer;
 
     private String documentType;
+
+    @Indexed(unique = true)
     private String numberdocument;
 
+    @Indexed(unique = true)
     private String numberphone;
+
+    @Indexed(unique = true)
     private String emailaddress;
 
-    public Customer(
-        String namecustomer,
-        String lastnamecustomer,
-        String documentType,
-        String numberdocument,
-        String numberphone,
-        String emailaddress
-    ) {
+    private String typecustomer;
+
+    public Customer(String namecustomer, String lastnamecustomer, String documentType, String numberdocument,
+            String numberphone, String emailaddress, String typecustomer) {
         this.namecustomer = namecustomer;
         this.lastnamecustomer = lastnamecustomer;
         this.documentType = documentType;
         this.numberdocument = numberdocument;
         this.numberphone = numberphone;
         this.emailaddress = emailaddress;
+        this.typecustomer = typecustomer;
     }
 }
