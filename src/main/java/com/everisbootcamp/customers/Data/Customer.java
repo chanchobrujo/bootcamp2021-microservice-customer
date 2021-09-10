@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
@@ -27,20 +26,21 @@ public class Customer {
     private String lastnamecustomer;
 
     private String documentType;
-
-    @Indexed(unique = true)
     private String numberdocument;
-
-    @Indexed(unique = true)
     private String numberphone;
-
-    @Indexed(unique = true)
     private String emailaddress;
 
     private String typecustomer;
 
-    public Customer(String namecustomer, String lastnamecustomer, String documentType, String numberdocument,
-            String numberphone, String emailaddress, String typecustomer) {
+    public Customer(
+        String namecustomer,
+        String lastnamecustomer,
+        String documentType,
+        String numberdocument,
+        String numberphone,
+        String emailaddress,
+        String typecustomer
+    ) {
         this.namecustomer = namecustomer;
         this.lastnamecustomer = lastnamecustomer;
         this.documentType = documentType;

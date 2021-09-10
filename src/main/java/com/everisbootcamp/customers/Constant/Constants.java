@@ -1,11 +1,13 @@
 package com.everisbootcamp.customers.Constant;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Constants {
     ;
+
     public static class Messages {
+
         public static final String CORRECT_DATA = "Datos registrados correctamente.";
         public static final String INCORRECT_DATA = "Datos incorrectos.";
         public static final String INVALID_DATA = "Datos inválidos.";

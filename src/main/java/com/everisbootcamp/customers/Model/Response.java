@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
@@ -13,10 +14,10 @@ import lombok.*;
 public class Response {
 
     private String message;
-    private String status;
+    private HttpStatus status;
     private LocalDateTime timestamp = LocalDateTime.now(ZoneId.of("America/Lima"));
 
-    public Response(String message, String status) {
+    public Response(String message, HttpStatus status) {
         this.message = message;
         this.status = status;
     }

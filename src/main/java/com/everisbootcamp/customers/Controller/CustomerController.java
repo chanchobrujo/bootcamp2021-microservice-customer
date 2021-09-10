@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,31 +31,24 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Customer>> findById(@PathVariable("id") String id) {
-        return service.getByIdcustomer(id).map(mapper -> ResponseEntity.ok().body(mapper))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+        return service
+            .getByIdcustomer(id)
+            .map(mapper -> ResponseEntity.ok().body(mapper))
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/save")
-    public Mono<ResponseEntity<Map<String, Object>>> save(@RequestBody @Valid CustomerFrom model,
-            BindingResult bindinResult) {
-        if (bindinResult.hasErrors())
-            return service.BindingResultErrors(bindinResult);
+    public Mono<ResponseEntity<Map<String, Object>>> save(
+        @RequestBody @Valid CustomerFrom model,
+        BindingResult bindinResult
+    ) {
+        if (bindinResult.hasErrors()) return service.BindingResultErrors(bindinResult);
 
-        return service.register(model).map(response -> {
-            return ResponseEntity.ok(response);
-        }).defaultIfEmpty(ResponseEntity.internalServerError().build());
-    }
-
-    @PutMapping("/update/{idcustomer}")
-    public Mono<ResponseEntity<Map<String, Object>>> update(@PathVariable("idcustomer") String idcustomer,
-            @RequestBody @Valid CustomerFrom model, BindingResult bindinResult) {
-        if (bindinResult.hasErrors())
-            return service.BindingResultErrors(bindinResult);
-
-        return service.update(idcustomer, model).map(response -> {
-
-            return ResponseEntity.ok(response);
-        }).defaultIfEmpty(ResponseEntity.internalServerError().build());
-
+        return service
+            .register(model)
+            .map(response -> {
+                return ResponseEntity.ok(response);
+            })
+            .defaultIfEmpty(ResponseEntity.internalServerError().build());
     }
 }
