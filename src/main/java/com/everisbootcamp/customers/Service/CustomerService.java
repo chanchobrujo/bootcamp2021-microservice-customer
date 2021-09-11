@@ -48,10 +48,11 @@ public class CustomerService {
             repository
                 .findAll()
                 .toStream()
-                .filter(c ->
-                    c.getEmailaddress().equals(model.getEmailaddress()) ||
-                    c.getNumberphone().equals(model.getNumberphone()) ||
-                    c.getNumberdocument().equals(model.getNumberdocument())
+                .filter(
+                    c ->
+                        c.getEmailaddress().equals(model.getEmailaddress()) ||
+                        c.getNumberphone().equals(model.getNumberphone()) ||
+                        c.getNumberdocument().equals(model.getNumberdocument())
                 )
                 .collect(Collectors.toList())
                 .isEmpty()

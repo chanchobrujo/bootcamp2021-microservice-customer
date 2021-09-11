@@ -46,9 +46,11 @@ public class CustomerController {
 
         return service
             .save(model)
-            .map(response -> {
-                return ResponseEntity.status(response.getStatus()).body(response.getResponse());
-            })
+            .map(
+                response -> {
+                    return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+                }
+            )
             .defaultIfEmpty(ResponseEntity.internalServerError().build());
     }
 }
