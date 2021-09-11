@@ -30,21 +30,28 @@ public class CustomerService {
         return Mono.just(ResponseEntity.internalServerError().body(response.getResponse()));
     }
 
-    public Mono<Map<String, Object>> save(String idcustomer, Customer customer) {
+    public Mono<Response> save(CustomerFrom model) {
         HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
         String message = Constants.Messages.REPET_DATA;
+
+        Customer customer = new Customer(
+            model.getNamecustomer(),
+            model.getLastnamecustomer(),
+            model.getDocumentType(),
+            model.getNumberdocument(),
+            model.getNumberphone(),
+            model.getEmailaddress(),
+            model.getTypecustomer()
+        );
 
         if (
             repository
                 .findAll()
                 .toStream()
                 .filter(c ->
-                    c.getEmailaddress().equals(customer.getEmailaddress()) ||
-                    c.getNumberphone().equals(customer.getNumberphone()) ||
-                    (
-                        c.getDocumentType().equals(c.getDocumentType()) &&
-                        c.getNumberdocument().equals(c.getNumberdocument())
-                    )
+                    c.getEmailaddress().equals(model.getEmailaddress()) ||
+                    c.getNumberphone().equals(model.getNumberphone()) ||
+                    c.getNumberdocument().equals(model.getNumberdocument())
                 )
                 .collect(Collectors.toList())
                 .isEmpty()
@@ -63,47 +70,13 @@ public class CustomerService {
             ) {
                 message = Constants.Messages.INVALID_DATA;
             } else {
-                if (idcustomer != null) customer.setIdcustomer(idcustomer);
-
                 status = HttpStatus.CREATED;
                 message = Constants.Messages.CORRECT_DATA;
                 repository.save(customer).subscribe();
             }
         }
 
-        return Mono.just(new Response(message, status).getResponse());
-    }
-
-    public Mono<Map<String, Object>> register(CustomerFrom model) {
-        Customer customer = new Customer(
-            model.getNamecustomer(),
-            model.getLastnamecustomer(),
-            model.getDocumentType(),
-            model.getNumberdocument(),
-            model.getNumberphone(),
-            model.getEmailaddress(),
-            model.getTypecustomer()
-        );
-
-        return save(null, customer);
-    }
-
-    public Mono<Map<String, Object>> update(String idcustomer, CustomerFrom model) {
-        Customer customer = new Customer(
-            model.getNamecustomer(),
-            model.getLastnamecustomer(),
-            model.getDocumentType(),
-            model.getNumberdocument(),
-            model.getNumberphone(),
-            model.getEmailaddress(),
-            model.getTypecustomer()
-        );
-
-        if (!repository.existsByIdcustomer(idcustomer).block()) return Mono.just(
-            new Response(Constants.Messages.CLIENT_NOT_FOUND, HttpStatus.NOT_FOUND).getResponse()
-        );
-
-        return save(idcustomer, customer);
+        return Mono.just(new Response(message, status));
     }
 
     public Mono<Customer> getByIdcustomer(String id) {

@@ -25,7 +25,6 @@ public class Response {
     public Map<String, Object> getResponse() {
         Map<String, Object> response = new HashMap<>();
 
-        response.put("status", this.getStatus());
         response.put("message", this.getMessage());
         response.put("timestamp", this.getTimestamp());
 

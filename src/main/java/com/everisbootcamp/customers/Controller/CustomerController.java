@@ -45,9 +45,9 @@ public class CustomerController {
         if (bindinResult.hasErrors()) return service.BindingResultErrors(bindinResult);
 
         return service
-            .register(model)
+            .save(model)
             .map(response -> {
-                return ResponseEntity.ok(response);
+                return ResponseEntity.status(response.getStatus()).body(response.getResponse());
             })
             .defaultIfEmpty(ResponseEntity.internalServerError().build());
     }
