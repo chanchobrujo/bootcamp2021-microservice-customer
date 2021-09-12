@@ -41,7 +41,7 @@ public class CustomerController {
     public Mono<ResponseEntity<Map<String, Object>>> save(
         @RequestBody @Valid CustomerFrom model,
         BindingResult bindinResult
-    ) {
+    ) { 
         if (bindinResult.hasErrors()) return service.BindingResultErrors(bindinResult);
 
         return service

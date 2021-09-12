@@ -87,17 +87,4 @@ public class CustomerService {
     public Flux<Customer> findAll() {
         return repository.findAll();
     }
-}
-/*
- * application.yml server: port: 9590
- *
- * spring: application: name: microservices-customer data: mongodb: database:
- * microservicescustomer uri: mongodb://localhost:27017/microservicescustomer
- *
- * application.properties -- spring.application.name=microservices-customer
- * server.port=9590 spring.data.mongodb.database=microservicescustomer
- *
- * #spring.data.mongodb.uri=mongodb+srv://palmachris7:bank2208@cluster0.a1f2l.
- * mongodb.net/test
- *
- */
+} 
