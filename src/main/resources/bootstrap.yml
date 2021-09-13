@@ -6,3 +6,6 @@ spring:
   cloud:
     config:
       uri: http://localhost:9510
+
+server:
+  port: 9591
