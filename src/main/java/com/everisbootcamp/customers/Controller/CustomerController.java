@@ -31,17 +31,11 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Customer>> findById(@PathVariable("id") String id) {
-        return service
-            .getByIdcustomer(id)
-            .map(mapper -> ResponseEntity.ok().body(mapper))
-            .defaultIfEmpty(ResponseEntity.notFound().build());
+        return service.getByIdcustomer(id).map(mapper -> ResponseEntity.ok().body(mapper)).defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/save")
-    public Mono<ResponseEntity<Map<String, Object>>> save(
-        @RequestBody @Valid CustomerFrom model,
-        BindingResult bindinResult
-    ) {
+    public Mono<ResponseEntity<Map<String, Object>>> save(@RequestBody @Valid CustomerFrom model, BindingResult bindinResult) {
         if (bindinResult.hasErrors()) return service.BindingResultErrors(bindinResult);
 
         return service

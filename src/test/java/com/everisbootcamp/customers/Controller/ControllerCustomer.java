@@ -1,8 +1,7 @@
 package com.everisbootcamp.customers.Controller;
 
 import com.everisbootcamp.customers.CustomersApplication;
-import com.everisbootcamp.customers.Service.CustomerService;
-import lombok.extern.slf4j.Slf4j;
+import com.everisbootcamp.customers.Service.CustomerService; 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
@@ -12,12 +11,8 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    classes = CustomersApplication.class
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = CustomersApplication.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ControllerCustomer {
 
