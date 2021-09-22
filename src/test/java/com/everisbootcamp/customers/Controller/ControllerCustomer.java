@@ -1,7 +1,7 @@
 package com.everisbootcamp.customers.Controller;
 
 import com.everisbootcamp.customers.CustomersApplication;
-import com.everisbootcamp.customers.Service.CustomerService; 
+import com.everisbootcamp.customers.Service.CustomerService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;

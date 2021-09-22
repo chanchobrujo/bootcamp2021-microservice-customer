@@ -22,7 +22,10 @@ public class CustomerService {
     CustomerRepository repository;
 
     public Mono<ResponseEntity<Map<String, Object>>> BindingResultErrors(BindingResult bindinResult) {
-        Response response = new Response(bindinResult.getAllErrors().stream().findFirst().get().getDefaultMessage().toString(), HttpStatus.NOT_ACCEPTABLE);
+        Response response = new Response(
+            bindinResult.getAllErrors().stream().findFirst().get().getDefaultMessage().toString(),
+            HttpStatus.NOT_ACCEPTABLE
+        );
 
         return Mono.just(ResponseEntity.internalServerError().body(response.getResponse()));
     }
@@ -55,8 +58,16 @@ public class CustomerService {
                 .isEmpty()
         ) {
             if (
-                Constants.TYPE_CUSTOMER.stream().filter(c -> c.equals(customer.getTypecustomer())).collect(Collectors.toList()).isEmpty() ||
-                Constants.TYPE_DOCUMENT.stream().filter(c -> c.equals(customer.getDocumentType())).collect(Collectors.toList()).isEmpty()
+                Constants.TYPE_CUSTOMER
+                    .stream()
+                    .filter(c -> c.equals(customer.getTypecustomer()))
+                    .collect(Collectors.toList())
+                    .isEmpty() ||
+                Constants.TYPE_DOCUMENT
+                    .stream()
+                    .filter(c -> c.equals(customer.getDocumentType()))
+                    .collect(Collectors.toList())
+                    .isEmpty()
             ) {
                 message = Constants.Messages.INVALID_DATA;
             } else {
