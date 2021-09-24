@@ -29,9 +29,13 @@ public class CustomerServiceTest {
     void getByIdcustomer() {
         Customer customerRequest = DataProvider.CustomerRequestA();
         customerRequest.setIdcustomer("123");
-        Mockito.when(repository.findByIdcustomer(customerRequest.getIdcustomer())).thenReturn(Mono.error(() -> null));
+        Mockito
+            .when(repository.findByIdcustomer(customerRequest.getIdcustomer()))
+            .thenReturn(Mono.error(() -> null));
 
-        Mono<Customer> customerId = serviceMock.getByIdcustomer(customerRequest.getIdcustomer());
+        Mono<Customer> customerId = serviceMock.getByIdcustomer(
+            customerRequest.getIdcustomer()
+        );
 
         StepVerifier.create(customerId).expectNext(customerRequest).verifyComplete();
     }

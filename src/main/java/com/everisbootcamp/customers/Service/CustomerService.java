@@ -21,13 +21,23 @@ public class CustomerService {
     @Autowired
     CustomerRepository repository;
 
-    public Mono<ResponseEntity<Map<String, Object>>> BindingResultErrors(BindingResult bindinResult) {
+    public Mono<ResponseEntity<Map<String, Object>>> BindingResultErrors(
+        BindingResult bindinResult
+    ) {
         Response response = new Response(
-            bindinResult.getAllErrors().stream().findFirst().get().getDefaultMessage().toString(),
+            bindinResult
+                .getAllErrors()
+                .stream()
+                .findFirst()
+                .get()
+                .getDefaultMessage()
+                .toString(),
             HttpStatus.NOT_ACCEPTABLE
         );
 
-        return Mono.just(ResponseEntity.internalServerError().body(response.getResponse()));
+        return Mono.just(
+            ResponseEntity.internalServerError().body(response.getResponse())
+        );
     }
 
     public Mono<Response> save(CustomerFrom model) {
@@ -48,11 +58,10 @@ public class CustomerService {
             repository
                 .findAll()
                 .toStream()
-                .filter(
-                    c ->
-                        c.getEmailaddress().equals(model.getEmailaddress()) ||
-                        c.getNumberphone().equals(model.getNumberphone()) ||
-                        c.getNumberdocument().equals(model.getNumberdocument())
+                .filter(c ->
+                    c.getEmailaddress().equals(model.getEmailaddress()) ||
+                    c.getNumberphone().equals(model.getNumberphone()) ||
+                    c.getNumberdocument().equals(model.getNumberdocument())
                 )
                 .collect(Collectors.toList())
                 .isEmpty()

@@ -14,9 +14,15 @@ public enum Constants {
         public static final String REPET_DATA = "Datos repetidos.";
 
         public static final String CLIENT_NOT_FOUND = "Cliente no econtrado.";
-        public static final String CLIENT_DELETED_SUCCESS = "Datos eliminados correctamente.";
+        public static final String CLIENT_DELETED_SUCCESS =
+            "Datos eliminados correctamente.";
     }
 
     public static List<String> TYPE_CUSTOMER = Arrays.asList("Empresarial", "Personal");
-    public static List<String> TYPE_DOCUMENT = Arrays.asList("DNI", "CEX", "Pasaporte", "RUC");
+    public static List<String> TYPE_DOCUMENT = Arrays.asList(
+        "DNI",
+        "CEX",
+        "Pasaporte",
+        "RUC"
+    );
 }
