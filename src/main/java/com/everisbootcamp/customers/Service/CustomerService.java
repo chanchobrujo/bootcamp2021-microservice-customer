@@ -1,6 +1,8 @@
 package com.everisbootcamp.customers.Service;
 
 import com.everisbootcamp.customers.Constant.Constants;
+import com.everisbootcamp.customers.Constant.enums.MessagesError;
+import com.everisbootcamp.customers.Constant.enums.MessagesSuccess;
 import com.everisbootcamp.customers.Data.Customer;
 import com.everisbootcamp.customers.Interface.CustomerRepository;
 import com.everisbootcamp.customers.Model.CustomerFrom;
@@ -35,9 +37,8 @@ public class CustomerService {
     			.findFirst();
     }
 
-    public Mono<Response> save(CustomerFrom model) {
-        HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
-        String message = Constants.Messages.REPET_DATA;
+    public Mono<Response> save(CustomerFrom model) { 
+    	Response response = new Response();
         
         Boolean verifyRepetData = this.findRepetedData(
         		model.getEmailaddress(), model.getNumberphone(), 
@@ -50,12 +51,11 @@ public class CustomerService {
         	Boolean verifyDocumentType = this.verifyService.
         			verifyTypeDocument(model.getDocumentType())
         			.isEmpty();
-
-            Customer customer = new Customer();  
         	
             if (verifyCustomerType || verifyDocumentType) {
-                message = Constants.Messages.INVALID_DATA;
-            } else {
+            	response = new Response(MessagesError.NOTFOUND_DATA);
+            } else { 
+                Customer customer = new Customer();  
                 
                 Customer.builder()
                 	.namecustomer(model.getNamecustomer())
@@ -64,15 +64,15 @@ public class CustomerService {
                 	.numberdocument(model.getNumberdocument())
                 	.numberphone(model.getNumberphone())
                 	.emailaddress(model.getEmailaddress())
-                	.typecustomer(model.getTypecustomer());
+                	.typecustomer(model.getTypecustomer()); 
                 
-                status = HttpStatus.CREATED;
-                message = Constants.Messages.CORRECT_DATA;
                 repository.save(customer).subscribe();
-            }
-        }
 
-        return Mono.just(new Response(message, status));
+            	response = new Response(MessagesSuccess.SUCCESS_REGISTER); 
+            }
+        } 
+
+        return Mono.just(new Response(MessagesSuccess.SUCCESS_REGISTER));
     }
 
     public Mono<Customer> getByIdcustomer(String id) {
