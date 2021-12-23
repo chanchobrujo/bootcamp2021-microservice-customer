@@ -3,6 +3,8 @@ package com.everisbootcamp.customers.Controller;
 import com.everisbootcamp.customers.Data.Customer;
 import com.everisbootcamp.customers.Model.CustomerFrom;
 import com.everisbootcamp.customers.Service.CustomerService;
+import com.everisbootcamp.execptions.ResponseBindingResultErrors;
+
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class CustomerController {
     @Autowired
     private CustomerService service;
 
+    @Autowired
+    private ResponseBindingResultErrors ResponseBindingResultErrors;
+
     @GetMapping("/")
     public Mono<ResponseEntity<Flux<Customer>>> findByAll() {
         return Mono.just(ResponseEntity.accepted().body(service.findAll()));
@@ -42,7 +47,8 @@ public class CustomerController {
         @RequestBody @Valid CustomerFrom model,
         BindingResult bindinResult
     ) {
-        if (bindinResult.hasErrors()) return service.BindingResultErrors(bindinResult);
+        if (bindinResult.hasErrors()) return ResponseBindingResultErrors
+        		.BindingResultErrors(bindinResult);
 
         return service
             .save(model)

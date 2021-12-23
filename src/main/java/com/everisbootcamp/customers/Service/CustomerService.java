@@ -35,25 +35,6 @@ public class CustomerService {
     			.findFirst();
     }
 
-    public Mono<ResponseEntity<Map<String, Object>>> BindingResultErrors(
-        BindingResult bindinResult
-    ) {
-        Response response = new Response(
-            bindinResult
-                .getAllErrors()
-                .stream()
-                .findFirst()
-                .get()
-                .getDefaultMessage()
-                .toString(),
-            HttpStatus.NOT_ACCEPTABLE
-        );
-
-        return Mono.just(
-            ResponseEntity.internalServerError().body(response.getResponse())
-        );
-    }
-
     public Mono<Response> save(CustomerFrom model) {
         HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
         String message = Constants.Messages.REPET_DATA;
