@@ -1,10 +1,9 @@
 package com.everisbootcamp.customers.Controller;
 
 import com.everisbootcamp.customers.Data.Customer;
+import com.everisbootcamp.customers.Error.ResponseBindingResultErrors;
 import com.everisbootcamp.customers.Model.CustomerFrom;
 import com.everisbootcamp.customers.Service.CustomerService;
-import com.everisbootcamp.execptions.ResponseBindingResultErrors;
-
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +46,17 @@ public class CustomerController {
         @RequestBody @Valid CustomerFrom model,
         BindingResult bindinResult
     ) {
-        if (bindinResult.hasErrors()) return ResponseBindingResultErrors
-        		.BindingResultErrors(bindinResult);
+        if (bindinResult.hasErrors()) return ResponseBindingResultErrors.BindingResultErrors(
+            bindinResult
+        );
 
         return service
             .save(model)
-            .map(response -> {
-                return ResponseEntity
-                    .status(response.getStatus())
-                    .body(response.getResponse());
-            })
+            .map(
+                response -> {
+                    return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+                }
+            )
             .defaultIfEmpty(ResponseEntity.internalServerError().build());
     }
 }

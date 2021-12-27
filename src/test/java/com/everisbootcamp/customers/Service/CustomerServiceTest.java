@@ -33,9 +33,7 @@ public class CustomerServiceTest {
             .when(repository.findByIdcustomer(customerRequest.getIdcustomer()))
             .thenReturn(Mono.error(() -> null));
 
-        Mono<Customer> customerId = serviceMock.getByIdcustomer(
-            customerRequest.getIdcustomer()
-        );
+        Mono<Customer> customerId = serviceMock.getByIdcustomer(customerRequest.getIdcustomer());
 
         StepVerifier.create(customerId).expectNext(customerRequest).verifyComplete();
     }

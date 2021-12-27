@@ -7,10 +7,5 @@ public enum Constants {
     ;
 
     public static List<String> TYPE_CUSTOMER = Arrays.asList("Empresarial", "Personal");
-    public static List<String> TYPE_DOCUMENT = Arrays.asList(
-        "DNI",
-        "CEX",
-        "Pasaporte",
-        "RUC"
-    );
+    public static List<String> TYPE_DOCUMENT = Arrays.asList("DNI", "CEX", "Pasaporte", "RUC");
 }

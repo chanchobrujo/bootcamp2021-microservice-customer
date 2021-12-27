@@ -1,5 +1,7 @@
 package com.everisbootcamp.customers.Model;
 
+import com.everisbootcamp.customers.Constant.enums.MessagesError;
+import com.everisbootcamp.customers.Constant.enums.MessagesSuccess;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -7,17 +9,14 @@ import java.util.Map;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
-import com.everisbootcamp.customers.Constant.enums.MessagesError;
-import com.everisbootcamp.customers.Constant.enums.MessagesSuccess;
-
 @Getter
-@Setter 
+@Setter
 @NoArgsConstructor
 public class Response {
 
     private String message;
     private HttpStatus status;
-    private LocalDateTime timestamp = LocalDateTime.now(ZoneId.of("America/Lima"));  
+    private LocalDateTime timestamp = LocalDateTime.now(ZoneId.of("America/Lima"));
 
     public Response(String message, HttpStatus status) {
         this.message = message;
