@@ -34,7 +34,7 @@ public class CustomerService {
     }
 
     public Mono<Response> save(CustomerFrom model) {
-        Response response = new Response();
+        Response response = new Response(MessagesError.INCORRECT_DATA);
         Boolean verifyRepetData =
             this.findRepetedData(
                     model.getEmailaddress(),
