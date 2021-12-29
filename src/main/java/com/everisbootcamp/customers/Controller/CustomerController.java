@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -33,30 +33,28 @@ public class CustomerController {
         return Mono.just(ResponseEntity.accepted().body(service.findAll()));
     }
 
-    @GetMapping("/{id}")
-    public Mono<ResponseEntity<Customer>> findById(@PathVariable("id") String id) {
+    @GetMapping("/findById")
+    public Mono<ResponseEntity<Customer>> findById(@RequestParam String id) {
         return service
-            .getByIdcustomer(id)
-            .map(mapper -> ResponseEntity.ok().body(mapper))
-            .defaultIfEmpty(ResponseEntity.notFound().build());
+                .getByIdcustomer(id)
+                .map(mapper -> ResponseEntity.ok().body(mapper))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/save")
     public Mono<ResponseEntity<Map<String, Object>>> save(
-        @RequestBody @Valid CustomerFrom model,
-        BindingResult bindinResult
-    ) {
-        if (bindinResult.hasErrors()) return ResponseBindingResultErrors.BindingResultErrors(
-            bindinResult
-        );
+            @RequestBody @Valid CustomerFrom model,
+            BindingResult bindinResult) {
+        if (bindinResult.hasErrors())
+            return ResponseBindingResultErrors.BindingResultErrors(
+                    bindinResult);
 
         return service
-            .save(model)
-            .map(
-                response -> {
-                    return ResponseEntity.status(response.getStatus()).body(response.getResponse());
-                }
-            )
-            .defaultIfEmpty(ResponseEntity.internalServerError().build());
+                .save(model)
+                .map(
+                        response -> {
+                            return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+                        })
+                .defaultIfEmpty(ResponseEntity.internalServerError().build());
     }
 }

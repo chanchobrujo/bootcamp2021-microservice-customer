@@ -21,11 +21,21 @@ public class CustomerService {
     @Autowired
     private VerifyService verifyService;
 
-    private Optional<Customer> findRepetedData(String email, String phone, String number) {
+    private Optional<Customer> findRepetedData(
+        String name,
+        String lastname,
+        String email,
+        String phone,
+        String number
+    ) {
         return this.repository.findAll()
             .toStream()
             .filter(
                 customer ->
+                    (
+                        customer.getNamecustomer().toUpperCase().equals(name.toUpperCase()) &&
+                        customer.getLastnamecustomer().toUpperCase().equals(lastname.toUpperCase())
+                    ) ||
                     customer.getEmailaddress().toUpperCase().equals(email.toUpperCase()) ||
                     customer.getNumberphone().toUpperCase().equals(phone.toUpperCase()) ||
                     customer.getNumberdocument().toUpperCase().equals(number.toUpperCase())
@@ -34,9 +44,11 @@ public class CustomerService {
     }
 
     public Mono<Response> save(CustomerFrom model) {
-        Response response = new Response();
+        Response response = new Response(MessagesError.REPETED_DATA);
         Boolean verifyRepetData =
             this.findRepetedData(
+                    model.getNamecustomer(),
+                    model.getLastnamecustomer(),
                     model.getEmailaddress(),
                     model.getNumberphone(),
                     model.getNumberdocument()
