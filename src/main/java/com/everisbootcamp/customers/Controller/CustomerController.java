@@ -36,27 +36,25 @@ public class CustomerController {
     @GetMapping("/findById")
     public Mono<ResponseEntity<Customer>> findById(@RequestParam String id) {
         return service
-            .getByIdcustomer(id)
-            .map(mapper -> ResponseEntity.ok().body(mapper))
-            .defaultIfEmpty(ResponseEntity.notFound().build());
+                .getByIdcustomer(id)
+                .map(mapper -> ResponseEntity.ok().body(mapper))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/save")
     public Mono<ResponseEntity<Map<String, Object>>> save(
-        @RequestBody @Valid CustomerFrom model,
-        BindingResult bindinResult
-    ) {
-        if (bindinResult.hasErrors()) return ResponseBindingResultErrors.BindingResultErrors(
-            bindinResult
-        );
+            @RequestBody @Valid CustomerFrom model,
+            BindingResult bindinResult) {
+        if (bindinResult.hasErrors())
+            return ResponseBindingResultErrors.BindingResultErrors(
+                    bindinResult);
 
         return service
-            .save(model)
-            .map(
-                response -> {
-                    return ResponseEntity.status(response.getStatus()).body(response.getResponse());
-                }
-            )
-            .defaultIfEmpty(ResponseEntity.internalServerError().build());
+                .save(model)
+                .map(
+                        response -> {
+                            return ResponseEntity.status(response.getStatus()).body(response.getResponse());
+                        })
+                .defaultIfEmpty(ResponseEntity.internalServerError().build());
     }
 }
